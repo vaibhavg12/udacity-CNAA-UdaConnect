@@ -1,0 +1,61 @@
+**1. Generate Python gRPC Services**
+
+- 	execute the below command from proto folder of respective modules to generate stub abd servicer classes
+- 	command changed for latest versions of grpcio and grpcio-tools. Refer https://grpc.io/docs/languages/python/quickstart/ 
+
+***$  python -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ --pyi_out=./ connection-data.proto***
+
+*NOTE: import for generated classes will need to be updated.*
+
+**2. Sample Request**
+
+- file names 'test_connections.py' lets you test the service once up and running.
+- This test file has 3 mandatory arguments i.e. person id, start and end date. while distance is the optional 4th argument.
+
+example:
+***$ python test_connections.py 6 2020-01-01 2020-06-30***
+
+sample output:
+--------------
+
+python test_connect_messages.py 6 2020-01-01 2020-06-30
+Sending search message :: person_id: 6
+start_date {
+  seconds: 1577854800
+}
+end_date {
+  seconds: 1593489600
+}
+ to host :: localhost:30003
+Response from host :: connections {
+  location {
+    id: 62
+    person_id: 8
+    creation_time {
+      seconds: 1578220626
+    }
+    wkt_shape: "ST_POINT(35.0585136 -106.5719521)"
+  }
+  person {
+    id: 8
+    first_name: "Paul"
+    last_name: "Badman"
+    company_name: "Paul Badman & Associates"
+  }
+}
+connections {
+  location {
+    id: 63
+    person_id: 5
+    creation_time {
+      seconds: 1578220626
+    }
+    wkt_shape: "ST_POINT(35.0585136 -106.5719521)"
+  }
+  person {
+    id: 5
+    first_name: "Taco"
+    last_name: "Fargo"
+    company_name: "Alpha Omega Upholstery"
+  }
+}

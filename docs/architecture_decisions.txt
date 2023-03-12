@@ -1,0 +1,15 @@
+# **Architecture Design Decisions**
+
+ **Modules:**
+
+1. Person Microservice (person-api) : exposes REST APIs for handling data related to a person. It also produces data for person topic and sends data to connection-api via gRPC. 
+2. Location Microservice (location): exposes REST APIs for fetching and creating location. It also produces data for location topic.
+3. Consumers: defines the consumers for person and location topic. It can scale independently.
+4. Connection Microservice (connection-api) :
+	- recieves connection data from person-api.
+	- implements internal API to handle geolocation data for the App.
+	- recieves small payloads and defines strict message contracts.
+
+**Patterns:**
+- gRPC : Gives the ability to process geolocation data concurrently and because the payloads are small and strict, it was the preffered messaging technology choosen.
+- Postgres Database : shared database - all microservices share it
